@@ -38,7 +38,7 @@ button {
 #logs-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 50px;          /* spacing between Played and Passes logs */
+  gap: 150px;          /* spacing between Played and Passes logs */
 }
 
 /* Each log box */
@@ -63,7 +63,7 @@ button {
 #played-log li {
   display: flex;
   align-items: center;
-  gap: 60px;
+  gap: 6px;
   white-space: nowrap;
 }
 
@@ -75,5 +75,6 @@ button {
   transform: rotate(-90deg);
   transform-origin: center center;
 }
+
 
 
