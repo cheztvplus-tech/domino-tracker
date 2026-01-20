@@ -31,6 +31,10 @@ const passesLogUl = document.getElementById('passes-log');
 const bgSelect = document.getElementById("bg-theme");
 const dominoSelect = document.getElementById("domino-theme");
 
+// 🔒 buttons hidden by default
+clearHandBtn.style.display = "none";
+newGameBtn.style.display = "none";
+
 // ======= Fetch sets.json =======
 fetch("sets.json")
   .then(res => res.json())
@@ -77,7 +81,7 @@ dominoSelect.addEventListener("change", e => {
   currentTileFolder = e.target.value;
   renderMyHandButtons();
   updatePlayedLog();
-  if (handIsSet) updatePredictions();   // ✅ FIX
+  if (handIsSet) updatePredictions();
 });
 
 function applyBackground(bg){
@@ -92,7 +96,6 @@ function initHandDropdowns(){
     const select = document.createElement('select');
     select.id = `hand-select-${k}`;
 
-    // ✅ MOBILE + DESKTOP FIX
     select.addEventListener("change", updateHandDropdowns);
     select.addEventListener("input", updateHandDropdowns);
 
@@ -146,8 +149,15 @@ setHandBtn.onclick = ()=>{
     myHand.push(v);
   }
 
-  handSelectionDiv.style.display="none";
   handIsSet = true;
+
+  // 🔒 hide dropdowns + set button
+  handDropdownsDiv.style.display = "none";
+  setHandBtn.style.display = "none";
+
+  // ✅ show control buttons
+  clearHandBtn.style.display = "inline-block";
+  newGameBtn.style.display = "inline-block";
 
   renderMyHandButtons();
   refreshPlayedDropdown();
@@ -161,9 +171,12 @@ clearHandBtn.onclick = ()=>{
   myHand = [];
   handIsSet = false;
 
-  handSelectionDiv.style.display="block";
-  myHandButtonsDiv.innerHTML = "";
+  handDropdownsDiv.style.display = "block";
+  setHandBtn.style.display = "inline-block";
+  clearHandBtn.style.display = "none";
+  newGameBtn.style.display = "none";
 
+  myHandButtonsDiv.innerHTML="";
   initHandDropdowns();
   refreshPlayedDropdown();
 
@@ -180,7 +193,11 @@ newGameBtn.onclick = ()=>{
   handIsSet = false;
   currentRotationIndex = 0;
 
-  handSelectionDiv.style.display="block";
+  handDropdownsDiv.style.display = "block";
+  setHandBtn.style.display = "inline-block";
+  clearHandBtn.style.display = "none";
+  newGameBtn.style.display = "none";
+
   myHandButtonsDiv.innerHTML="";
   playedLogUl.innerHTML="";
   passesLogUl.innerHTML="";
@@ -223,74 +240,6 @@ function refreshPlayedDropdown(){
       o.value=t; o.text=t;
       playedDropdown.appendChild(o);
     }
-  });
-}
-
-// ======= Opponent Play =======
-addPlayBtn.onclick = ()=>{
-  if(!playedDropdown.value) return alert("Select tile");
-  playedDominoes.push({domino:playedDropdown.value, player:playerSelect.value});
-  refreshPlayedDropdown();
-  updatePredictions();
-  updatePlayedLog();
-  nextTurn();
-};
-
-// ======= Pass =======
-passBtn.onclick = ()=>{
-  const p = playerSelect.value;
-  if(passNumber1Select.value) passes[p].add(+passNumber1Select.value);
-  if(passNumber2Select.value) passes[p].add(+passNumber2Select.value);
-  updatePredictions();
-  nextTurn();
-};
-
-// ======= Predictions =======
-function updatePredictions(){
-  if(!handIsSet) return;
-
-  const used = new Set([...myHand, ...playedDominoes.map(d=>d.domino)]);
-  const remaining = allDominoes.filter(t=>!used.has(t));
-  const tilesLeft = { RP:7, MP:7, LP:7 };
-
-  playedDominoes.forEach(d=>{
-    if(d.player!=="ME") tilesLeft[d.player]--;
-  });
-
-  const impossible = { RP:new Set(), MP:new Set(), LP:new Set() };
-  ["RP","MP","LP"].forEach(p=>{
-    remaining.forEach(t=>{
-      passes[p].forEach(n=>{
-        const [a,b]=t.split("|").map(Number);
-        if(a===n||b===n) impossible[p].add(t);
-      });
-    });
-  });
-
-  const pred={ RP:[], MP:[], LP:[] };
-  let pool=remaining.slice().sort(()=>Math.random()-0.5);
-
-  ["RP","MP","LP"].forEach(p=>{
-    while(pred[p].length<tilesLeft[p] && pool.length){
-      const t=pool.shift();
-      if(!impossible[p].has(t)) pred[p].push(t);
-    }
-  });
-
-  rpTilesSpan.innerHTML=pred.RP.map(t=>img(t)).join("");
-  mpTilesSpan.innerHTML=pred.MP.map(t=>img(t)).join("");
-  lpTilesSpan.innerHTML=pred.LP.map(t=>img(t)).join("");
-}
-
-const img = t => `<img src="${currentTileFolder}/${t.replace("|","-")}.png" width="40">`;
-
-// ======= Played Log =======
-function updatePlayedLog(){
-  playedLogUl.innerHTML="";
-  playedDominoes.forEach((d,i)=>{
-    const li=document.createElement("li");
-    li.innerHTML=`${i+1}. ${d.player} <img src="${currentTileFolder}/${d.domino.replace("|","-")}.png" height="40">`;
-    playedLogUl.appendChild(li);
   });
 }
 
