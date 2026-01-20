@@ -74,6 +74,7 @@ dominoSelect.addEventListener("change", e => {
   currentTileFolder = e.target.value;
   renderMyHandButtons();
   updatePlayedLog();
+  if (handIsSet) updatePredictions();   // ← THIS IS THE FIX
 });
 
 function applyBackground(bg){
@@ -265,3 +266,4 @@ function nextTurn(){
 if("serviceWorker"in navigator){
   navigator.serviceWorker.register("service-worker.js");
 }
+
