@@ -8,7 +8,7 @@ let playedDominoes = [];
 let passes = { RP: new Set(), MP: new Set(), LP: new Set() };
 const playerRotation = ["RP","MP","LP"];
 let currentRotationIndex = 0;
-let handIsSet = false; // <-- FLAG to prevent premature predictions
+let handIsSet = false; // <-- flag to prevent premature opponent generation
 
 // ======= Elements =======
 const handDropdownsDiv = document.getElementById('hand-dropdowns');
@@ -73,14 +73,11 @@ fetch("sets.json")
 
 // ======= Background / Domino Color change =======
 bgSelect.addEventListener("change", e => applyBackground(e.target.value));
-
 dominoSelect.addEventListener("change", e => {
   currentTileFolder = e.target.value;
   renderMyHandButtons();
   updatePlayedLog();
-  if(handIsSet){ // <-- ONLY update predictions after hand is set
-    updatePredictions();
-  }
+  // DO NOT update opponent predictions here
 });
 
 function applyBackground(bg){
@@ -143,10 +140,10 @@ setHandBtn.addEventListener('click', ()=>{
     myHand.push(val);
   }
   handSelectionDiv.style.display = "none";
-  handIsSet = true; // <-- FLAG now true
+  handIsSet = true; // now true
   renderMyHandButtons();
   refreshPlayedDropdown();
-  updatePredictions();
+  updatePredictions(); // ONLY here and during gameplay
   updatePlayedLog();
   initRotationDropdown();
 });
@@ -168,7 +165,7 @@ function playMyTile(tile){
   myHand = myHand.filter(t => t !== tile);
   renderMyHandButtons();
   refreshPlayedDropdown();
-  updatePredictions();
+  if(handIsSet) updatePredictions();
   updatePlayedLog();
 }
 
@@ -225,7 +222,7 @@ passBtn.addEventListener('click', ()=>{
 
 // ======= Update Predictions =======
 function updatePredictions(){
-  if(!handIsSet) return; // <-- ONLY generate after hand is set
+  if(!handIsSet) return; // NEVER generate opponents until hand is set
   const used = new Set([...myHand, ...playedDominoes.map(d=>d.domino)]);
   const remaining = allDominoes.filter(t=>!used.has(t));
   const tilesLeft = { RP: 7, MP: 7, LP: 7 };
