@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Domino Tracker</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <h1>Domino Tracker</h1>
+
+  <!-- Theme / Domino selectors -->
+  <label for="bg-theme">Background:</label>
+  <select id="bg-theme"></select>
+
+  <label for="domino-theme">Domino Color:</label>
+  <select id="domino-theme"></select>
+
+  <!-- Hand Selection -->
+  <h2>Your Hand</h2>
+  <div id="hand-selection">
+    <p>Select 7 tiles for your hand:</p>
+    <div id="hand-dropdowns"></div>
+    <button id="set-hand-btn">Set My Hand</button>
+  </div>
+
+  <div id="my-hand-buttons"></div>
+
+  <!-- Played Dominoes -->
+  <h2>Played Dominoes</h2>
+  <div id="played-section">
+    Tile Played:
+    <select id="played-domino"></select>
+    Player:
+    <select id="player-select">
+      <option value="RP">RP</option>
+      <option value="MP">MP</option>
+      <option value="LP">LP</option>
+    </select>
+    <button id="add-play-btn">Add Play</button>
+    <br><br>
+    Pass on number 1:
+    <select id="pass-number1"></select>
+    Pass on number 2:
+    <select id="pass-number2"></select>
+    <button id="pass-btn">Pass</button>
+  </div>
+
+  <!-- Opponent Predictions -->
+  <h2>Possible Tiles for Opponents</h2>
+  <div id="opponent-predictions">
+    <p>RP: <span id="rp-tiles"></span></p>
+    <p>MP: <span id="mp-tiles"></span></p>
+    <p>LP: <span id="lp-tiles"></span></p>
+  </div>
+
+  <!-- Logs -->
+  <div id="logs-container">
+    <div>
+      <h3>Played Dominoes Log</h3>
+      <ul id="played-log"></ul>
+    </div>
+    <div>
+      <h3>Passes Log</h3>
+      <ul id="passes-log"></ul>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
