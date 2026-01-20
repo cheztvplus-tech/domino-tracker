@@ -4,20 +4,22 @@
   <meta charset="UTF-8">
   <title>Domino Tracker</title>
   <link rel="stylesheet" href="style.css">
-  <link rel="manifest" href="manifest.json">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="manifest" href="manifest.json">
 </head>
 <body>
   <h1>Domino Tracker</h1>
 
-  <!-- Theme / Domino selectors -->
-  <label for="bg-theme">Background:</label>
-  <select id="bg-theme"></select>
+  <!-- ======= Theme & Domino Selection ======= -->
+  <div id="theme-selection">
+    <label for="bg-theme">Background: </label>
+    <select id="bg-theme"></select>
 
-  <label for="domino-theme">Domino Color:</label>
-  <select id="domino-theme"></select>
+    <label for="domino-theme">Domino Color: </label>
+    <select id="domino-theme"></select>
+  </div>
 
-  <!-- Hand Selection -->
+  <!-- ======= Hand Selection ======= -->
   <h2>Your Hand</h2>
   <div id="hand-selection">
     <p>Select 7 tiles for your hand:</p>
@@ -25,9 +27,10 @@
     <button id="set-hand-btn">Set My Hand</button>
   </div>
 
+  <!-- ======= My Hand Buttons ======= -->
   <div id="my-hand-buttons"></div>
 
-  <!-- Played Dominoes -->
+  <!-- ======= Played Dominoes ======= -->
   <h2>Played Dominoes</h2>
   <div id="played-section">
     Tile Played:
@@ -47,7 +50,7 @@
     <button id="pass-btn">Pass</button>
   </div>
 
-  <!-- Opponent Predictions -->
+  <!-- ======= Opponent Predictions ======= -->
   <h2>Possible Tiles for Opponents</h2>
   <div id="opponent-predictions">
     <p>RP: <span id="rp-tiles"></span></p>
@@ -55,14 +58,14 @@
     <p>LP: <span id="lp-tiles"></span></p>
   </div>
 
-  <!-- Logs -->
-  <div id="logs-container">
-    <div>
-      <h3>Played Dominoes Log</h3>
+  <!-- ======= Logs ======= -->
+  <div id="logs" style="display:flex; gap:50px; flex-wrap:wrap;">
+    <div style="flex:1; min-width:150px;">
+      <h2>Played Dominoes Log</h2>
       <ul id="played-log"></ul>
     </div>
-    <div>
-      <h3>Passes Log</h3>
+    <div style="flex:1; min-width:150px;">
+      <h2>Passes Log</h2>
       <ul id="passes-log"></ul>
     </div>
   </div>
