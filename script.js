@@ -29,23 +29,6 @@ const passesLogUl = document.getElementById('passes-log');
 const bgSelect = document.getElementById("bg-theme");
 const dominoSelect = document.getElementById("domino-theme");
 
-// ======= HAND DROPDOWNS (MOBILE SAFE) =======
-const handSelects = [];
-
-for (let i = 0; i < 7; i++) {
-  const select = document.createElement("select");
-  select.dataset.index = i;
-
-  select.addEventListener("change", refreshHandDropdowns);
-
-  handDropdownsDiv.appendChild(select);
-  handDropdownsDiv.appendChild(document.createElement("br"));
-
-  handSelects.push(select);
-}
-
-refreshHandDropdowns();
-
 // ======= Fetch sets.json =======
 fetch("sets.json")
   .then(res => res.json())
@@ -313,4 +296,5 @@ function nextTurn(){
 if ("serviceWorker" in navigator){
   window.addEventListener("load", ()=>navigator.serviceWorker.register("service-worker.js"));
 }
+
 
