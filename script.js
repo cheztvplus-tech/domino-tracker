@@ -72,7 +72,14 @@ fetch("sets.json")
 
 // ======= Background / Domino Color change =======
 bgSelect.addEventListener("change", e => applyBackground(e.target.value));
-dominoSelect.addEventListener("change", e => { currentTileFolder = e.target.value; renderMyHandButtons(); updatePredictions(); updatePlayedLog(); });
+dominoSelect.addEventListener("change", e => {
+  currentTileFolder = e.target.value;
+  renderMyHandButtons();
+  updatePlayedLog();
+  if(myHand.length === 7){ // only update opponent predictions if hand is set
+    updatePredictions();
+  }
+});
 
 function applyBackground(bg){
   document.body.style.background = themes[bg];
@@ -215,6 +222,7 @@ passBtn.addEventListener('click', ()=>{
 
 // ======= Update Predictions =======
 function updatePredictions(){
+  if(myHand.length !== 7) return; // prevent generation before hand is set
   const used = new Set([...myHand, ...playedDominoes.map(d=>d.domino)]);
   const remaining = allDominoes.filter(t=>!used.has(t));
   const tilesLeft = { RP: 7, MP: 7, LP: 7 };
