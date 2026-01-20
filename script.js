@@ -8,6 +8,7 @@ let playedDominoes = [];
 let passes = { RP: new Set(), MP: new Set(), LP: new Set() };
 const playerRotation = ["RP","MP","LP"];
 let currentRotationIndex = 0;
+let handIsSet = false; // <-- FLAG to prevent premature predictions
 
 // ======= Elements =======
 const handDropdownsDiv = document.getElementById('hand-dropdowns');
@@ -72,11 +73,12 @@ fetch("sets.json")
 
 // ======= Background / Domino Color change =======
 bgSelect.addEventListener("change", e => applyBackground(e.target.value));
+
 dominoSelect.addEventListener("change", e => {
   currentTileFolder = e.target.value;
   renderMyHandButtons();
   updatePlayedLog();
-  if(myHand.length === 7){ // only update opponent predictions if hand is set
+  if(handIsSet){ // <-- ONLY update predictions after hand is set
     updatePredictions();
   }
 });
@@ -141,6 +143,7 @@ setHandBtn.addEventListener('click', ()=>{
     myHand.push(val);
   }
   handSelectionDiv.style.display = "none";
+  handIsSet = true; // <-- FLAG now true
   renderMyHandButtons();
   refreshPlayedDropdown();
   updatePredictions();
@@ -194,7 +197,7 @@ addPlayBtn.addEventListener('click', ()=>{
   if(!domino){ alert("Select a tile!"); return; }
   playedDominoes.push({domino, player, timestamp: new Date()});
   refreshPlayedDropdown();
-  updatePredictions();
+  if(handIsSet) updatePredictions();
   updatePlayedLog();
   nextTurn();
 });
@@ -207,7 +210,7 @@ passBtn.addEventListener('click', ()=>{
   if(!num1 && !num2){ alert("Select at least one number!"); return; }
   if(num1) passes[player].add(parseInt(num1));
   if(num2) passes[player].add(parseInt(num2));
-  updatePredictions();
+  if(handIsSet) updatePredictions();
 
   const li = document.createElement('li');
   if(num1 && num2) li.innerHTML = `${player} passed on <img src="tiles-black/${num1}.png" width="30"><img src="tiles-black/${num2}.png" width="30">`;
@@ -222,7 +225,7 @@ passBtn.addEventListener('click', ()=>{
 
 // ======= Update Predictions =======
 function updatePredictions(){
-  if(myHand.length !== 7) return; // prevent generation before hand is set
+  if(!handIsSet) return; // <-- ONLY generate after hand is set
   const used = new Set([...myHand, ...playedDominoes.map(d=>d.domino)]);
   const remaining = allDominoes.filter(t=>!used.has(t));
   const tilesLeft = { RP: 7, MP: 7, LP: 7 };
