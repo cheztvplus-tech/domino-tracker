@@ -43,7 +43,7 @@ button {
 
 /* Each log box */
 #played-log-container, #passes-log-container {
-  flex: 1 1 300px;
+  flex: 0 0 300px;
 }
 
 /* Headers inside logs */
@@ -75,6 +75,7 @@ button {
   transform: rotate(-90deg);
   transform-origin: center center;
 }
+
 
 
 
