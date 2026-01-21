@@ -114,7 +114,7 @@ button {
 #opponent-predictions p {
   display: flex;
   flex-wrap: nowrap;
-  overflow-x: auto;
+  overflow: visible;
   gap: 4px;
   align-items: center;
   margin-bottom: 5px;
@@ -181,3 +181,4 @@ button {
   font-size: 14px;
   margin-top: 5px;
 }
+
