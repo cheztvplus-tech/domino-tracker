@@ -1,4 +1,4 @@
-const CACHE_NAME = "domino-tracker-cache-v1";
+const CACHE_NAME = "domino-tracker-cache-v1.0";
 const urlsToCache = [
   "./",
   "./index.html",
@@ -23,4 +23,5 @@ self.addEventListener("fetch", (event) => {
   event.respondWith(
     caches.match(event.request).then((resp) => resp || fetch(event.request))
   );
+
 });
