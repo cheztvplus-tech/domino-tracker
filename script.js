@@ -5,7 +5,7 @@ let currentTileFolder = "";
 let defaultBackground = "";
 let myHand = [];
 let playedDominoes = [];
-let passes = { RP: new Set(), MP: new Set(), LP: new Set() };
+let passes = { RP:new Set(), MP:new Set(), LP:new Set() };
 const playerRotation = ["RP","MP","LP"];
 let currentRotationIndex = 0;
 let handIsSet = false;
@@ -40,8 +40,9 @@ fetch("sets.json")
     allDominoes = data.dominoes;
     themes = data.themes;
     defaultBackground = data.defaultBackground;
-     = data.defaultDomino;
+    currentTileFolder = data.defaultDomino;
 
+    // Background options
     Object.keys(themes).forEach(t => {
       const opt = document.createElement("option");
       opt.value = t;
@@ -51,19 +52,30 @@ fetch("sets.json")
     bgSelect.value = defaultBackground;
     applyBackground(defaultBackground);
 
-    ["tiles-white b", "tiles-neon", "tiles-black","tiles-white","tiles-green","tiles-purple","tiles-red"].forEach(t => {
+    // ======= Domino Colors (updated) =======
+    [
+      "tiles-white b",      // ✅ White W/Border (default)
+      "tiles-black",
+      "tiles-white",
+      "tiles-green",
+      "tiles-purple",
+      "tiles-red",
+      "tiles-neon"          // ✅ Neon
+    ].forEach(t => {
       const opt = document.createElement("option");
       opt.value = t;
 
-      // Special display names for the new tiles
-  if(t === "tiles-white b") opt.text = "White W/Border";
-  else if(t === "tiles-neon") opt.text = "Neon";
-  else opt.text = t.split("-")[1].charAt(0).toUpperCase() + t.split("-")[1].slice(1);
+      if(t === "tiles-white b") opt.text = "White W/Border";
+      else opt.text = t.split("-")[1].charAt(0).toUpperCase() + t.split("-")[1].slice(1);
+
       dominoSelect.appendChild(opt);
     });
+
+    // Set default
     currentTileFolder = "tiles-white b";
     dominoSelect.value = currentTileFolder;
 
+    // Pass numbers
     for(let i=0;i<=6;i++){
       [passNumber1Select, passNumber2Select].forEach(sel=>{
         const o = document.createElement("option");
@@ -186,7 +198,7 @@ clearHandBtn.onclick=()=>{
 function renderMyHandButtons(){
   myHandButtonsDiv.innerHTML="";
   myHand.forEach(t=>{
-    const b=document.createElement("button");
+    const b=document.createElement('button');
     b.innerHTML=`<img src="${currentTileFolder}/${t.replace("|","-")}.png" width="50">`;
     b.onclick=()=>playMyTile(t);
     myHandButtonsDiv.appendChild(b);
@@ -305,6 +317,3 @@ function nextTurn(){
 if("serviceWorker" in navigator){
   navigator.serviceWorker.register("service-worker.js");
 }
-
-
-
