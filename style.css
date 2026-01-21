@@ -27,6 +27,13 @@ button {
 }
 
 /* ===== Possible Tiles for Opponents ===== */
+/* ✅ ADDITIVE FIX: keep one row everywhere */
+#rp-tiles,
+#mp-tiles,
+#lp-tiles {
+  white-space: nowrap;
+}
+
 #rp-tiles img,
 #mp-tiles img,
 #lp-tiles img {
@@ -98,7 +105,7 @@ button {
   #rp-tiles img,
   #mp-tiles img,
   #lp-tiles img {
-    height: 38px;           /* slightly smaller for phones */
+    height: 38px;           /* your chosen mobile size */
     flex-shrink: 0;         /* ⛔ never shrink */
   }
 }
@@ -106,14 +113,14 @@ button {
 /* ===== Possible Tiles for Opponents Container ===== */
 #opponent-predictions p {
   display: flex;
-  flex-wrap: nowrap;        /* Prevent wrapping to next line */
-  overflow-x: auto;         /* Allows horizontal scrolling if too wide for screen */
-  gap: 4px;                 /* Space between tiles */
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: 4px;
   align-items: center;
   margin-bottom: 5px;
 }
 
-/* Optional: hide scrollbar for cleaner look */
+/* Optional scrollbar styling */
 #opponent-predictions p::-webkit-scrollbar {
   height: 6px;
 }
@@ -125,7 +132,7 @@ button {
   background: transparent;
 }
 
-/* ===== NEW: Visual Fix for Top Section ===== */
+/* ===== Visual Fix for Top Section ===== */
 #theme-selection {
   display: flex;
   flex-wrap: wrap;
