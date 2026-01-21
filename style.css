@@ -105,3 +105,25 @@ button {
     flex-shrink: 0;         /* ⛔ never shrink */
   }
 }
+
+/* ===== Possible Tiles for Opponents Container ===== */
+#opponent-predictions p {
+  display: flex;
+  flex-wrap: nowrap;        /* Prevent wrapping to next line */
+  overflow-x: auto;         /* Allows horizontal scrolling if too wide for screen */
+  gap: 4px;                 /* Space between tiles */
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+/* Optional: hide scrollbar for cleaner look */
+#opponent-predictions p::-webkit-scrollbar {
+  height: 6px;
+}
+#opponent-predictions p::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 3px;
+}
+#opponent-predictions p::-webkit-scrollbar-track {
+  background: transparent;
+}
