@@ -90,7 +90,7 @@ button {
 }
 
 /* ===== MOBILE FIX: keep opponent tiles on one row ===== */
-@media (max-width: 768px) {
+@media (max-width: 800px) {
 
   #rp-tiles,
   #mp-tiles,
@@ -181,6 +181,7 @@ button {
   font-size: 14px;
   margin-top: 5px;
 }
+
 
 
 
