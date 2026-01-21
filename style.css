@@ -178,3 +178,19 @@ select {
     width: 54px;
   }
 }
+
+/* ===== SPACING FIX: Hand Selection Button ===== */
+#hand-selection button#set-hand-btn {
+  margin-top: 8px; /* adds vertical space between dropdowns and button */
+}
+
+/* ===== PLAYED LOG SPACING FIX ===== */
+#played-log li {
+  gap: 12px; /* increases space between text and rotated domino image */
+}
+
+#played-log img {
+  margin-left: 0; /* ensure no extra left margin */
+  transform: rotate(-90deg);
+  height: 46px; /* keep your existing size */
+}
