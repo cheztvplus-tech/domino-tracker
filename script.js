@@ -51,10 +51,14 @@ fetch("sets.json")
     bgSelect.value = defaultBackground;
     applyBackground(defaultBackground);
 
-    ["tiles-black","tiles-white","tiles-green","tiles-purple","tiles-red"].forEach(t => {
+    ["tiles-white b", "tiles-neon", "tiles-black","tiles-white","tiles-green","tiles-purple","tiles-red"].forEach(t => {
       const opt = document.createElement("option");
       opt.value = t;
-      opt.text = t.split("-")[1].charAt(0).toUpperCase() + t.split("-")[1].slice(1);
+
+      // Special display names for the new tiles
+  if(t === "tiles-white b") opt.text = "White W/Border";
+  else if(t === "tiles-neon") opt.text = "Neon";
+  else opt.text = t.split("-")[1].charAt(0).toUpperCase() + t.split("-")[1].slice(1);
       dominoSelect.appendChild(opt);
     });
     dominoSelect.value = currentTileFolder;
@@ -300,3 +304,4 @@ function nextTurn(){
 if("serviceWorker" in navigator){
   navigator.serviceWorker.register("service-worker.js");
 }
+
