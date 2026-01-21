@@ -114,7 +114,7 @@ function initHandDropdowns(){
   }
 }
 
-// ======= Hand Filtering (mobile-friendly) =======
+// ======= Hand Filtering (mobile + desktop) =======
 function updateHandDropdowns(){
   const selected = new Set();
   for(let i=0;i<7;i++){
@@ -126,14 +126,14 @@ function updateHandDropdowns(){
     const sel = document.getElementById(`hand-select-${i}`);
     const currentVal = sel.value;
 
-    // Save the default "Select Tile X" option
+    // Default option
     const defaultOption = document.createElement('option');
     defaultOption.value = "";
     defaultOption.text = `Select Tile ${i+1}`;
     sel.innerHTML = "";
     sel.appendChild(defaultOption);
 
-    // Add tiles that are not selected elsewhere or the current value
+    // Add only allowed tiles
     allDominoes.forEach(tile => {
       if(!selected.has(tile) || tile === currentVal){
         const o = document.createElement('option');
@@ -252,7 +252,7 @@ passBtn.onclick = ()=>{
   nextTurn();
 };
 
-// ======= Predictions =======
+// ======= Predictions (fixed for passes and independent player pools) =======
 function updatePredictions(){
   if(!handIsSet) return;
   const used = new Set([...myHand, ...playedDominoes.map(d=>d.domino)]);
@@ -271,11 +271,12 @@ function updatePredictions(){
   });
 
   const pred = { RP:[], MP:[], LP:[] };
-  let pool = remaining.slice().sort(()=>Math.random()-0.5);
+
   ["RP","MP","LP"].forEach(p=>{
-    while(pred[p].length<tilesLeft[p] && pool.length){
-      const t = pool.shift();
-      if(!impossible[p].has(t)) pred[p].push(t);
+    // independent pool per player
+    let pool = remaining.filter(t=>!impossible[p].has(t)).sort(()=>Math.random()-0.5);
+    while(pred[p].length < tilesLeft[p] && pool.length){
+      pred[p].push(pool.shift());
     }
   });
 
@@ -283,6 +284,7 @@ function updatePredictions(){
   mpTilesSpan.innerHTML = pred.MP.map(t=>img(t)).join("");
   lpTilesSpan.innerHTML = pred.LP.map(t=>img(t)).join("");
 }
+
 const img = t=>`<img src="${currentTileFolder}/${t.replace("|","-")}.png" width="40">`;
 
 // ======= Played Log =======
