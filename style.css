@@ -98,7 +98,7 @@ button {
     display: flex;
     flex-wrap: nowrap;      /* ⛔ no second line */
     gap: 6px;
-    /*overflow-x: auto;       /* ✅ horizontal scroll if needed */
+    overflow: visible;       /* ✅ horizontal scroll if needed */
     padding-bottom: 4px;
   }
 
@@ -181,6 +181,7 @@ button {
   font-size: 14px;
   margin-top: 5px;
 }
+
 
 
 
