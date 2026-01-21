@@ -42,7 +42,6 @@ fetch("sets.json")
     defaultBackground = data.defaultBackground;
     currentTileFolder = data.defaultDomino;
 
-    // Backgrounds
     Object.keys(themes).forEach(t => {
       const opt = document.createElement("option");
       opt.value = t;
@@ -52,9 +51,8 @@ fetch("sets.json")
     bgSelect.value = defaultBackground;
     applyBackground(defaultBackground);
 
-    // Domino colors
     [
-      "tiles-white b",      // default
+      "tiles-white b",
       "tiles-black",
       "tiles-white",
       "tiles-green",
@@ -73,19 +71,17 @@ fetch("sets.json")
     currentTileFolder = "tiles-white b";
     dominoSelect.value = currentTileFolder;
 
-    // ======= PASS NUMBERS (FIXED) =======
     [passNumber1Select, passNumber2Select].forEach(sel => {
       sel.innerHTML = "";
-
       const blank = document.createElement("option");
       blank.value = "";
       blank.text = "—";
       sel.appendChild(blank);
 
-      for(let i = 0; i <= 6; i++){
-        const opt = document.createElement("option");
-        opt.value = i;
-        opt.text = i;
+      for(let i=0;i<=6;i++){
+        const opt=document.createElement("option");
+        opt.value=i;
+        opt.text=i;
         sel.appendChild(opt);
       }
     });
@@ -93,12 +89,13 @@ fetch("sets.json")
     initHandDropdowns();
   });
 
-// ======= Background / Domino Color =======
+// ======= Theme Switching =======
 bgSelect.addEventListener("change", e => applyBackground(e.target.value));
 dominoSelect.addEventListener("change", e => {
   currentTileFolder = e.target.value;
   renderMyHandButtons();
   updatePlayedLog();
+  updatePassesLog(); // 🔥 keep pass images synced with theme
   if(handIsSet) updatePredictions();
 });
 
@@ -113,11 +110,11 @@ function applyBackground(bg){
 function initHandDropdowns(){
   handDropdownsDiv.innerHTML="";
   for(let k=0;k<7;k++){
-    const select = document.createElement('select');
-    select.id = `hand-select-${k}`;
+    const select=document.createElement('select');
+    select.id=`hand-select-${k}`;
     select.addEventListener("change", updateHandDropdowns);
 
-    const def = document.createElement('option');
+    const def=document.createElement('option');
     def.value="";
     def.text=`Select Tile ${k+1}`;
     select.appendChild(def);
@@ -134,9 +131,8 @@ function initHandDropdowns(){
   }
 }
 
-// ======= Hand Filtering =======
 function updateHandDropdowns(){
-  const selected = new Set();
+  const selected=new Set();
   for(let i=0;i<7;i++){
     const v=document.getElementById(`hand-select-${i}`).value;
     if(v) selected.add(v);
@@ -148,10 +144,9 @@ function updateHandDropdowns(){
     sel.innerHTML=`<option value="">Select Tile ${i+1}</option>`;
 
     allDominoes.forEach(t=>{
-      if(!selected.has(t) || t===current){
+      if(!selected.has(t)||t===current){
         const o=document.createElement("option");
-        o.value=t;
-        o.text=t;
+        o.value=t;o.text=t;
         if(t===current) o.selected=true;
         sel.appendChild(o);
       }
@@ -176,6 +171,7 @@ setHandBtn.onclick=()=>{
   refreshPlayedDropdown();
   updatePredictions();
   updatePlayedLog();
+  updatePassesLog();
   syncRotationWithSelect();
 };
 
@@ -242,23 +238,50 @@ addPlayBtn.onclick=()=>{
   nextTurn();
 };
 
-// ======= Pass =======
+// ======= PASS (FIXED & THEMED) =======
 passBtn.onclick=()=>{
   syncRotationWithSelect();
   const p=playerSelect.value;
+  const nums=[];
 
-  if(passNumber1Select.value) passes[p].add(+passNumber1Select.value);
-  if(passNumber2Select.value) passes[p].add(+passNumber2Select.value);
+  if(passNumber1Select.value!==""){
+    const n=+passNumber1Select.value;
+    passes[p].add(n); nums.push(n);
+  }
+  if(passNumber2Select.value!==""){
+    const n=+passNumber2Select.value;
+    passes[p].add(n); nums.push(n);
+  }
 
-  const li=document.createElement("li");
-  li.innerHTML=`${p} passed`;
-  passesLogUl.appendChild(li);
+  passesLogUl.dataset.log = passesLogUl.dataset.log || "[]";
+  const log = JSON.parse(passesLogUl.dataset.log);
+  log.push({ player:p, nums });
+  passesLogUl.dataset.log = JSON.stringify(log);
+
+  updatePassesLog();
 
   passNumber1Select.value="";
   passNumber2Select.value="";
   updatePredictions();
   nextTurn();
 };
+
+// ======= Passes Log Renderer =======
+function updatePassesLog(){
+  passesLogUl.innerHTML="";
+  const log = JSON.parse(passesLogUl.dataset.log || "[]");
+
+  log.forEach((entry,i)=>{
+    const li=document.createElement("li");
+    li.innerHTML=`
+      ${i+1}. ${entry.player} passed
+      ${entry.nums.map(n =>
+        `<img src="${currentTileFolder}/${n}.png" height="30">`
+      ).join("")}
+    `;
+    passesLogUl.appendChild(li);
+  });
+}
 
 // ======= Predictions =======
 function updatePredictions(){
@@ -282,12 +305,11 @@ function updatePredictions(){
 
   const pred={ RP:[], MP:[], LP:[] };
   ["RP","MP","LP"].forEach(p=>{
-    let avail = globalAvailable.filter(t=>!impossible[p].has(t))
-      .sort(()=>Math.random()-0.5);
-    while(pred[p].length<tilesLeft[p] && avail.length){
-      const tile = avail.shift();
+    let avail=globalAvailable.filter(t=>!impossible[p].has(t)).sort(()=>Math.random()-0.5);
+    while(pred[p].length<tilesLeft[p]&&avail.length){
+      const tile=avail.shift();
       pred[p].push(tile);
-      globalAvailable = globalAvailable.filter(t=>t!==tile);
+      globalAvailable=globalAvailable.filter(t=>t!==tile);
     }
   });
 
@@ -310,7 +332,7 @@ function updatePlayedLog(){
 
 // ======= Rotation =======
 function syncRotationWithSelect(){
-  currentRotationIndex = playerRotation.indexOf(playerSelect.value);
+  currentRotationIndex=playerRotation.indexOf(playerSelect.value);
 }
 function nextTurn(){
   currentRotationIndex=(currentRotationIndex+1)%3;
