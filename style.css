@@ -98,14 +98,14 @@ button {
     display: flex;
     flex-wrap: nowrap;      /* ⛔ no second line */
     gap: 6px;
-    overflow-x: auto;       /* ✅ horizontal scroll if needed */
+    /*overflow-x: auto;       /* ✅ horizontal scroll if needed */
     padding-bottom: 4px;
   }
 
   #rp-tiles img,
   #mp-tiles img,
   #lp-tiles img {
-    height: 50px;           /* your chosen mobile size */
+    height: 40px;           /* your chosen mobile size */
     flex-shrink: 0;         /* ⛔ never shrink */
   }
 }
@@ -181,6 +181,7 @@ button {
   font-size: 14px;
   margin-top: 5px;
 }
+
 
 
 
