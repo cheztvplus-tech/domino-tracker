@@ -186,7 +186,7 @@ select {
 
 /* ===== PLAYED LOG SPACING FIX ===== */
 #played-log li {
-  gap: 100px; /* increases space between text and rotated domino image */
+  gap: 500px; /* increases space between text and rotated domino image */
 }
 
 #played-log img {
@@ -194,5 +194,6 @@ select {
   transform: rotate(-90deg);
   height: 46px; /* keep your existing size */
 }
+
 
 
