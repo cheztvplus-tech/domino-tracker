@@ -30,6 +30,9 @@ const bgSelect = document.getElementById("bg-theme");
 const dominoSelect = document.getElementById("domino-theme");
 const clearHandBtn = document.getElementById('clear-hand-btn');
 
+// ✅ FIX: keep rotation synced on desktop & mobile
+playerSelect.addEventListener("change", syncRotationWithSelect);
+
 // ======= Fetch sets.json =======
 fetch("sets.json")
   .then(res => res.json())
@@ -151,7 +154,7 @@ setHandBtn.onclick=()=>{
   updatePredictions();
   updatePlayedLog();
 
-  syncRotationWithSelect(); // ✅ FIX
+  syncRotationWithSelect();
 };
 
 // ======= Clear Hand =======
@@ -210,7 +213,7 @@ function refreshPlayedDropdown(){
 // ======= Opponent Play =======
 addPlayBtn.onclick=()=>{
   if(!playedDropdown.value){ alert("Select a tile"); return; }
-  syncRotationWithSelect();   // ✅ FIX
+  syncRotationWithSelect();
   playedDominoes.push({domino:playedDropdown.value,player:playerSelect.value});
   refreshPlayedDropdown();
   updatePredictions();
@@ -220,7 +223,7 @@ addPlayBtn.onclick=()=>{
 
 // ======= Pass =======
 passBtn.onclick=()=>{
-  syncRotationWithSelect();   // ✅ FIX
+  syncRotationWithSelect();
   const p=playerSelect.value;
   if(passNumber1Select.value) passes[p].add(+passNumber1Select.value);
   if(passNumber2Select.value) passes[p].add(+passNumber2Select.value);
@@ -235,7 +238,7 @@ passBtn.onclick=()=>{
   nextTurn();
 };
 
-// ======= Predictions (fixed) =======
+// ======= Predictions =======
 function updatePredictions(){
   if(!handIsSet) return;
 
@@ -280,7 +283,7 @@ function updatePlayedLog(){
   });
 }
 
-// ======= Rotation FIX =======
+// ======= Rotation =======
 function syncRotationWithSelect(){
   currentRotationIndex = playerRotation.indexOf(playerSelect.value);
 }
