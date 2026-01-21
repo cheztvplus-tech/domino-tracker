@@ -13,73 +13,96 @@
 
   <!-- ======= Theme & Domino Selection ======= -->
   <div class="card">
-  <div id="theme-selection">
-    <label for="bg-theme">Background: </label>
-    <select id="bg-theme"></select>
+    <div id="theme-selection">
+      <label for="bg-theme">Background: </label>
+      <select id="bg-theme"></select>
 
-    <label for="domino-theme">Domino Color: </label>
-    <select id="domino-theme"></select>
+      <label for="domino-theme">Domino Color: </label>
+      <select id="domino-theme"></select>
     </div>
   </div>
 
   <!-- ======= Clear Hand Button ======= -->
-  <div id="clear-hand-container">
+  <div class="card" id="clear-hand-container">
     <button id="clear-hand-btn">Clear My Hand</button>
   </div>
 
   <!-- ======= Hand Selection ======= -->
-  <h2>Your Hand</h2>
-  <div id="hand-selection">
-    <p>Select 7 tiles for your hand:</p>
-    <div id="hand-dropdowns"></div>
-    <button id="set-hand-btn">Set My Hand</button>
+  <div class="card">
+    <h2>Your Hand</h2>
+    <div id="hand-selection">
+      <p>Select 7 tiles for your hand:</p>
+      <div id="hand-dropdowns"></div>
+      <button id="set-hand-btn">Set My Hand</button>
+    </div>
   </div>
 
-  <!-- ======= My Hand Buttons ======= -->
-  <div id="my-hand-buttons"></div>
+  <!-- ======= YOUR HAND + PLAYED DOMINOES (SIDE BY SIDE) ======= -->
+  <div class="card" style="display:flex; gap:30px; flex-wrap:wrap;">
 
-  <!-- ======= Played Dominoes ======= -->
-  <h2>Played Dominoes</h2>
-  <div id="played-section">
-    Tile Played:
-    <select id="played-domino"></select>
-    Player:
-    <select id="player-select">
-      <option value="RP">RP</option>
-      <option value="MP">MP</option>
-      <option value="LP">LP</option>
-    </select>
-    <button id="add-play-btn">Add Play</button>
-    <br><br>
-    Pass on number 1:
-    <select id="pass-number1"></select>
-    Pass on number 2:
-    <select id="pass-number2"></select>
-    <button id="pass-btn">Pass</button>
+    <!-- ======= My Hand Buttons ======= -->
+    <div style="flex:1; min-width:280px;">
+      <h2>Your Hand</h2>
+      <div id="my-hand-buttons"></div>
+    </div>
+
+    <!-- ======= Played Dominoes ======= -->
+    <div style="flex:1; min-width:280px;">
+      <h2>Played Dominoes</h2>
+      <div id="played-section">
+        Tile Played:
+        <select id="played-domino"></select>
+
+        Player:
+        <select id="player-select">
+          <option value="RP">RP</option>
+          <option value="MP">MP</option>
+          <option value="LP">LP</option>
+        </select>
+
+        <button id="add-play-btn">Add Play</button>
+
+        <br><br>
+
+        Pass on number 1:
+        <select id="pass-number1"></select>
+
+        Pass on number 2:
+        <select id="pass-number2"></select>
+
+        <button id="pass-btn">Pass</button>
+      </div>
+    </div>
+
   </div>
 
   <!-- ======= Opponent Predictions ======= -->
-  <h2>Possible Tiles for Opponents</h2>
-  <div id="opponent-predictions">
-    <p>RP: <span id="rp-tiles"></span></p>
-    <p>MP: <span id="mp-tiles"></span></p>
-    <p>LP: <span id="lp-tiles"></span></p>
+  <div class="card">
+    <h2>Possible Tiles for Opponents</h2>
+    <div id="opponent-predictions">
+      <p>RP: <span id="rp-tiles"></span></p>
+      <p>MP: <span id="mp-tiles"></span></p>
+      <p>LP: <span id="lp-tiles"></span></p>
+    </div>
   </div>
 
   <!-- ======= Logs Side by Side ======= -->
-  <div id="logs-container">
-    <div id="played-log-container">
-      <h2>Played Dominoes Log</h2>
-      <ul id="played-log"></ul>
-    </div>
-    <div id="passes-log-container">
-      <h2>Passes Log</h2>
-      <ul id="passes-log"></ul>
+  <div class="card">
+    <div id="logs-container">
+      <div id="played-log-container">
+        <h2>Played Dominoes Log</h2>
+        <ul id="played-log"></ul>
+      </div>
+
+      <div id="passes-log-container">
+        <h2>Passes Log</h2>
+        <ul id="passes-log"></ul>
+      </div>
     </div>
   </div>
 
   <!-- ======= Add to Home Screen / Install ======= -->
-  <div id="install-container" style="margin:20px 0;">
+  <div class="card" id="install-container">
     <button id="install-btn" style="display:none; padding:8px 16px; font-size:16px;">
       Install App
     </button>
@@ -91,4 +114,3 @@
   <script src="script.js"></script>
 </body>
 </html>
-
