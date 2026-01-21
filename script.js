@@ -40,7 +40,7 @@ fetch("sets.json")
     allDominoes = data.dominoes;
     themes = data.themes;
     defaultBackground = data.defaultBackground;
-    currentTileFolder = data.defaultDomino;
+     = data.defaultDomino;
 
     Object.keys(themes).forEach(t => {
       const opt = document.createElement("option");
@@ -304,4 +304,5 @@ function nextTurn(){
 if("serviceWorker" in navigator){
   navigator.serviceWorker.register("service-worker.js");
 }
+
 
