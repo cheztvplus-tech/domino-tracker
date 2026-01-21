@@ -343,3 +343,31 @@ function nextTurn(){
 if("serviceWorker" in navigator){
   navigator.serviceWorker.register("service-worker.js");
 }
+
+// ======= Add to Home Screen / Install =======
+let deferredPrompt;
+const installBtn = document.getElementById("install-btn");
+const iosHint = document.getElementById("ios-hint");
+
+// Android: show install button when beforeinstallprompt fires
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  installBtn.style.display = 'inline-block';
+});
+
+// Install button click
+installBtn.addEventListener('click', async () => {
+  if(deferredPrompt){
+    deferredPrompt.prompt();
+    const choiceResult = await deferredPrompt.userChoice;
+    deferredPrompt = null;
+    installBtn.style.display = 'none';
+  }
+});
+
+// iOS detection: show hint if not in standalone mode
+const isIos = () => /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase());
+const isInStandaloneMode = () => ('standalone' in window.navigator) && (window.navigator.standalone);
+
+if(isIos() && !isInStandaloneMode()) iosHint.style.display = 'block';
