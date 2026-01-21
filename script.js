@@ -61,6 +61,7 @@ fetch("sets.json")
   else opt.text = t.split("-")[1].charAt(0).toUpperCase() + t.split("-")[1].slice(1);
       dominoSelect.appendChild(opt);
     });
+    currentTileFolder = "tiles-white b";
     dominoSelect.value = currentTileFolder;
 
     for(let i=0;i<=6;i++){
@@ -304,5 +305,6 @@ function nextTurn(){
 if("serviceWorker" in navigator){
   navigator.serviceWorker.register("service-worker.js");
 }
+
 
 
