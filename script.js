@@ -30,7 +30,7 @@ const bgSelect = document.getElementById("bg-theme");
 const dominoSelect = document.getElementById("domino-theme");
 const clearHandBtn = document.getElementById('clear-hand-btn');
 
-// ✅ FIX: keep rotation synced on desktop & mobile
+// Keep rotation synced
 playerSelect.addEventListener("change", syncRotationWithSelect);
 
 // ======= Fetch sets.json =======
@@ -42,7 +42,7 @@ fetch("sets.json")
     defaultBackground = data.defaultBackground;
     currentTileFolder = data.defaultDomino;
 
-    // Background options
+    // Backgrounds
     Object.keys(themes).forEach(t => {
       const opt = document.createElement("option");
       opt.value = t;
@@ -52,38 +52,43 @@ fetch("sets.json")
     bgSelect.value = defaultBackground;
     applyBackground(defaultBackground);
 
-    // ======= Domino Colors (updated) =======
+    // Domino colors
     [
-      "tiles-white b",      // ✅ White W/Border (default)
+      "tiles-white b",      // default
       "tiles-black",
       "tiles-white",
       "tiles-green",
       "tiles-purple",
       "tiles-red",
-      "tiles-neon"          // ✅ Neon
+      "tiles-neon"
     ].forEach(t => {
       const opt = document.createElement("option");
       opt.value = t;
-
-      if(t === "tiles-white b") opt.text = "White W/Border";
-      else opt.text = t.split("-")[1].charAt(0).toUpperCase() + t.split("-")[1].slice(1);
-
+      opt.text = (t === "tiles-white b")
+        ? "White W/Border"
+        : t.split("-")[1].charAt(0).toUpperCase() + t.split("-")[1].slice(1);
       dominoSelect.appendChild(opt);
     });
 
-    // Set default
     currentTileFolder = "tiles-white b";
     dominoSelect.value = currentTileFolder;
 
-    // Pass numbers
-    for(let i=0;i<=6;i++){
-      [passNumber1Select, passNumber2Select].forEach(sel=>{
-        const o = document.createElement("option");
-        o.value = i;
-        o.text = i;
-        sel.appendChild(o.cloneNode(true));
-      });
-    }
+    // ======= PASS NUMBERS (FIXED) =======
+    [passNumber1Select, passNumber2Select].forEach(sel => {
+      sel.innerHTML = "";
+
+      const blank = document.createElement("option");
+      blank.value = "";
+      blank.text = "—";
+      sel.appendChild(blank);
+
+      for(let i = 0; i <= 6; i++){
+        const opt = document.createElement("option");
+        opt.value = i;
+        opt.text = i;
+        sel.appendChild(opt);
+      }
+    });
 
     initHandDropdowns();
   });
@@ -129,7 +134,7 @@ function initHandDropdowns(){
   }
 }
 
-// ======= MOBILE-SAFE Hand Filtering =======
+// ======= Hand Filtering =======
 function updateHandDropdowns(){
   const selected = new Set();
   for(let i=0;i<7;i++){
@@ -164,13 +169,13 @@ setHandBtn.onclick=()=>{
     if(seen.has(v)){ alert(`Tile ${v} selected twice!`); return; }
     seen.add(v); myHand.push(v);
   }
+
   handSelectionDiv.style.display="none";
   handIsSet=true;
   renderMyHandButtons();
   refreshPlayedDropdown();
   updatePredictions();
   updatePlayedLog();
-
   syncRotationWithSelect();
 };
 
@@ -189,7 +194,6 @@ clearHandBtn.onclick=()=>{
   rpTilesSpan.innerHTML="";
   mpTilesSpan.innerHTML="";
   lpTilesSpan.innerHTML="";
-
   playedLogUl.innerHTML="";
   passesLogUl.innerHTML="";
 };
@@ -242,6 +246,7 @@ addPlayBtn.onclick=()=>{
 passBtn.onclick=()=>{
   syncRotationWithSelect();
   const p=playerSelect.value;
+
   if(passNumber1Select.value) passes[p].add(+passNumber1Select.value);
   if(passNumber2Select.value) passes[p].add(+passNumber2Select.value);
 
@@ -255,7 +260,7 @@ passBtn.onclick=()=>{
   nextTurn();
 };
 
-// ======= Predictions (FIXED: NO DUPLICATES) =======
+// ======= Predictions =======
 function updatePredictions(){
   if(!handIsSet) return;
 
@@ -282,7 +287,7 @@ function updatePredictions(){
     while(pred[p].length<tilesLeft[p] && avail.length){
       const tile = avail.shift();
       pred[p].push(tile);
-      globalAvailable = globalAvailable.filter(t=>t!==tile); // 🔒 reserve globally
+      globalAvailable = globalAvailable.filter(t=>t!==tile);
     }
   });
 
@@ -307,7 +312,6 @@ function updatePlayedLog(){
 function syncRotationWithSelect(){
   currentRotationIndex = playerRotation.indexOf(playerSelect.value);
 }
-
 function nextTurn(){
   currentRotationIndex=(currentRotationIndex+1)%3;
   playerSelect.value=playerRotation[currentRotationIndex];
