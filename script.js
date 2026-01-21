@@ -114,20 +114,33 @@ function initHandDropdowns(){
   }
 }
 
-// ======= Hand Filtering =======
+// ======= Hand Filtering (mobile-friendly) =======
 function updateHandDropdowns(){
   const selected = new Set();
   for(let i=0;i<7;i++){
     const val = document.getElementById(`hand-select-${i}`).value;
     if(val) selected.add(val);
   }
+
   for(let i=0;i<7;i++){
     const sel = document.getElementById(`hand-select-${i}`);
-    Array.from(sel.options).forEach(opt=>{
-      if(opt.value && opt.value !== sel.value && selected.has(opt.value)){
-        opt.style.display = "none";
-      } else {
-        opt.style.display = "block";
+    const currentVal = sel.value;
+
+    // Save the default "Select Tile X" option
+    const defaultOption = document.createElement('option');
+    defaultOption.value = "";
+    defaultOption.text = `Select Tile ${i+1}`;
+    sel.innerHTML = "";
+    sel.appendChild(defaultOption);
+
+    // Add tiles that are not selected elsewhere or the current value
+    allDominoes.forEach(tile => {
+      if(!selected.has(tile) || tile === currentVal){
+        const o = document.createElement('option');
+        o.value = tile;
+        o.text = tile;
+        if(tile === currentVal) o.selected = true;
+        sel.appendChild(o);
       }
     });
   }
