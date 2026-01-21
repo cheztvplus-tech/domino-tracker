@@ -37,7 +37,7 @@ button {
 #rp-tiles img,
 #mp-tiles img,
 #lp-tiles img {
-  width: 40px;
+  width: 50px;
   margin: 2px;
   vertical-align: middle;
 }
@@ -105,7 +105,7 @@ button {
   #rp-tiles img,
   #mp-tiles img,
   #lp-tiles img {
-    height: 45px;           /* your chosen mobile size */
+    height: 50px;           /* your chosen mobile size */
     flex-shrink: 0;         /* ⛔ never shrink */
   }
 }
@@ -181,5 +181,6 @@ button {
   font-size: 14px;
   margin-top: 5px;
 }
+
 
 
