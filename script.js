@@ -238,19 +238,19 @@ passBtn.onclick=()=>{
   nextTurn();
 };
 
-// ======= Predictions =======
+// ======= Predictions (FIXED: NO DUPLICATES) =======
 function updatePredictions(){
   if(!handIsSet) return;
 
   const used=new Set([...myHand,...playedDominoes.map(d=>d.domino)]);
-  const remaining=allDominoes.filter(t=>!used.has(t));
+  let globalAvailable = allDominoes.filter(t=>!used.has(t));
 
   const tilesLeft={ RP:7, MP:7, LP:7 };
   playedDominoes.forEach(d=>{ if(d.player!=="ME") tilesLeft[d.player]--; });
 
   const impossible={ RP:new Set(), MP:new Set(), LP:new Set() };
   ["RP","MP","LP"].forEach(p=>{
-    remaining.forEach(t=>{
+    globalAvailable.forEach(t=>{
       passes[p].forEach(n=>{
         const[a,b]=t.split("|").map(Number);
         if(a===n||b===n) impossible[p].add(t);
@@ -260,9 +260,12 @@ function updatePredictions(){
 
   const pred={ RP:[], MP:[], LP:[] };
   ["RP","MP","LP"].forEach(p=>{
-    const avail=remaining.filter(t=>!impossible[p].has(t)).sort(()=>Math.random()-0.5);
+    let avail = globalAvailable.filter(t=>!impossible[p].has(t))
+      .sort(()=>Math.random()-0.5);
     while(pred[p].length<tilesLeft[p] && avail.length){
-      pred[p].push(avail.shift());
+      const tile = avail.shift();
+      pred[p].push(tile);
+      globalAvailable = globalAvailable.filter(t=>t!==tile); // 🔒 reserve globally
     }
   });
 
