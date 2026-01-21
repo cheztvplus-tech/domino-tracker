@@ -1,4 +1,4 @@
-const CACHE_NAME = "domino-tracker-cache-v1.0";
+const CACHE_NAME = "domino-tracker-cache-v1.01";
 const urlsToCache = [
   "./",
   "./index.html",
@@ -25,4 +25,5 @@ self.addEventListener("install", (event) => {
   );
 
 });
+
 
