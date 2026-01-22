@@ -60,11 +60,20 @@ select {
 /* ===== TOP CONTROLS ===== */
 #theme-selection {
   display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-  align-items: center;
+  flex-direction: column; /* forces each label + dropdown on its own line */
+  gap: 12px; /* spacing between rows */
 }
 
+#theme-selection label {
+  display: inline-block;
+  min-width: 140px; /* optional, keeps labels aligned */
+}
+
+#theme-selection select {
+  display: inline-block;
+}
+
+/* ===== CLEAR HAND ===== */
 #clear-hand-container {
   margin-top: 10px;
 }
@@ -137,7 +146,7 @@ select {
 #passes-log li {
   display: flex;
   align-items: center;
-  gap: 50px;
+  gap: 50px; /* space between text and rotated domino */
   margin-bottom: 6px;
   white-space: nowrap;
 }
@@ -183,7 +192,7 @@ select {
     width: 54px;
   }
 
-  /* ===== MOBILE FIX: Background / Domino Color ===== */
+  /* MOBILE FIX: Background / Domino Color */
   #theme-selection {
     display: grid;
     grid-template-columns: auto 1fr;
