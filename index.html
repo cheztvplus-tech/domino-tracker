@@ -64,34 +64,43 @@
   <div class="card">
     <h2>Played Dominoes</h2>
     <div id="played-section">
-      Tile Played:
-      <select id="played-domino"></select>
 
-      Player:
-      <select id="player-select">
-        <option value="RP">RP</option>
-        <option value="MP">MP</option>
-        <option value="LP">LP</option>
-      </select>
-
-      <button id="add-play-btn">Add Play</button>
-
-     <!-- PASS NUMBERS STACKED -->
-    <div id="pass-selects" style="margin-top:8px; display:flex; flex-direction:column; gap:6px;">
-      <div>
-        Pass on number 1:
-        <select id="pass-number1"></select>
+      <!-- Tile Played and Player on one line -->
+      <div style="margin-bottom:8px;">
+        Tile Played:
+        <select id="played-domino"></select>
+        Player:
+        <select id="player-select">
+          <option value="RP">RP</option>
+          <option value="MP">MP</option>
+          <option value="LP">LP</option>
+        </select>
       </div>
 
-      <div>
-        Pass on number 2:
-        <select id="pass-number2"></select>
+      <!-- Add Play on its own line -->
+      <div style="margin-bottom:8px;">
+        <button id="add-play-btn">Add Play</button>
       </div>
 
-      <button id="pass-btn" style="align-self:flex-start;">Pass</button>
+      <!-- Pass selectors stacked vertically -->
+      <div id="pass-selects" style="display:flex; flex-direction:column; gap:6px;">
+        <div>
+          Pass on number 1:
+          <select id="pass-number1"></select>
+        </div>
+
+        <div>
+          Pass on number 2:
+          <select id="pass-number2"></select>
+        </div>
+
+        <div>
+          <button id="pass-btn">Pass</button>
+        </div>
+      </div>
+
     </div>
   </div>
-</div>
 
   <!-- ===== BOTTOM ROW: THREE CARDS ===== -->
   <div style="display:flex; gap:30px; flex-wrap:wrap;">
@@ -123,8 +132,3 @@
   <script src="script.js"></script>
 </body>
 </html>
-
-
-
-
-
