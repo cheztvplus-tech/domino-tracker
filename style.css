@@ -177,27 +177,36 @@ select {
   #lp-tiles img {
     width: 54px;
   }
+
+  /* ✅ MOBILE FIX: Theme dropdown layout */
+  #theme-selection {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  #theme-selection label {
+    display: inline-block;
+    min-width: 120px;
+  }
+
+  #theme-selection select {
+    flex: 1;
+  }
 }
 
 /* ===== SPACING FIX: Hand Selection Button ===== */
 #hand-selection button#set-hand-btn {
-  margin-top: 8px; /* adds vertical space between dropdowns and button */
+  margin-top: 8px;
 }
 
 /* ===== PLAYED LOG SPACING FIX ===== */
 #played-log li {
-  gap: 50px; /* increases space between text and rotated domino image */
+  gap: 50px;
 }
 
 #played-log img {
-  margin-left: 0; /* ensure no extra left margin */
+  margin-left: 0;
   transform: rotate(-90deg);
-  height: 46px; /* keep your existing size */
+  height: 46px;
 }
-
-
-
-
-
-
-
