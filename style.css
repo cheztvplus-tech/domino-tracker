@@ -72,7 +72,7 @@ select {
 
 #theme-selection select {
   display: inline-block;
-  max-width: 75px; /* <-- limits dropdown width */
+  max-width: 125px; /* <-- limits dropdown width */
 }
 
 /* ===== CLEAR HAND ===== */
@@ -211,4 +211,5 @@ select {
     width: 100%;
   }
 }
+
 
