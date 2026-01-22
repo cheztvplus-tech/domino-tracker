@@ -25,19 +25,31 @@
       </div>
     </div>
 
-    <!-- Install with clickable logo -->
+    <!-- Install / Logo / Description -->
     <div class="card" id="install-container" style="flex:1; min-width:280px;">
-      <div style="display:flex; align-items:center; gap:10px;">
-        <button id="install-btn" style="display:none; padding:8px 16px; font-size:16px;">
-          Install App
-        </button>
+
+      <!-- Logo + Description -->
+      <div style="display:flex; gap:12px; align-items:flex-start; margin-bottom:10px;">
         <a href="https://yourwebsite.com" target="_blank">
-          <img src="domino.png" alt="Domino Logo" style="height:40px; width:auto;">
+          <img src="domino.png" alt="Domino Logo" style="height:42px; width:auto;">
         </a>
+
+        <div style="font-size:14px; line-height:1.4;">
+          Track played dominoes, monitor passes, and predict opponent tiles in real time
+          during live domino games.
+        </div>
       </div>
+
+      <!-- Install Button -->
+      <button id="install-btn" style="display:none; padding:8px 16px; font-size:16px;">
+        Install App
+      </button>
+
+      <!-- iOS Instructions -->
       <p id="ios-hint" style="display:none; font-size:14px; color:#555; margin-top:6px;">
         To add to your home screen, tap <strong>Share → Add to Home Screen</strong>
       </p>
+
     </div>
 
   </div>
@@ -46,7 +58,6 @@
   <div class="card">
     <h2>Your Hand</h2>
 
-    <!-- Hand Selection -->
     <div id="hand-selection">
       <p>Select 7 tiles for your hand:</p>
       <div id="hand-dropdowns"></div>
@@ -56,7 +67,6 @@
 
     <hr style="margin:16px 0; border-color:rgba(255,255,255,0.2);">
 
-    <!-- Your Hand -->
     <div id="my-hand-buttons"></div>
   </div>
 
@@ -70,7 +80,6 @@
     <h2>Played Dominoes</h2>
     <div id="played-section">
 
-      <!-- Tile Played and Player on one line -->
       <div style="margin-bottom:8px;">
         Tile Played:
         <select id="played-domino"></select>
@@ -82,12 +91,10 @@
         </select>
       </div>
 
-      <!-- Add Play on its own line -->
       <div style="margin-bottom:8px;">
         <button id="add-play-btn">Add Play</button>
       </div>
 
-      <!-- Pass selectors stacked vertically -->
       <div id="pass-selects" style="display:flex; flex-direction:column; gap:6px;">
         <div>
           Pass on number 1:
@@ -107,10 +114,9 @@
     </div>
   </div>
 
-  <!-- ===== BOTTOM ROW: THREE CARDS ===== -->
+  <!-- ===== BOTTOM ROW ===== -->
   <div style="display:flex; gap:30px; flex-wrap:wrap;">
 
-    <!-- Possible Tiles -->
     <div class="card" style="flex:1; min-width:280px;">
       <h2>Possible Tiles for Opponents</h2>
       <div id="opponent-predictions">
@@ -120,13 +126,11 @@
       </div>
     </div>
 
-    <!-- Played Log -->
     <div class="card" style="flex:1; min-width:280px;">
       <h2>Played Dominoes Log</h2>
       <ul id="played-log"></ul>
     </div>
 
-    <!-- Passes Log -->
     <div class="card" style="flex:1; min-width:280px;">
       <h2>Passes Log</h2>
       <ul id="passes-log"></ul>
