@@ -76,20 +76,22 @@
 
       <button id="add-play-btn">Add Play</button>
 
-      <div id="pass-selects" style="margin-top:8px;">
-
-      Pass on number 1:
-      <select id="pass-number1"></select>
-        
+     <!-- PASS NUMBERS STACKED -->
+    <div id="pass-selects" style="margin-top:8px; display:flex; flex-direction:column; gap:6px;">
       <div>
-      Pass on number 2:
-      <select id="pass-number2"></select>
+        Pass on number 1:
+        <select id="pass-number1"></select>
       </div>
-        
-      <button id="pass-btn">Pass</button>
+
+      <div>
+        Pass on number 2:
+        <select id="pass-number2"></select>
       </div>
+
+      <button id="pass-btn" style="align-self:flex-start;">Pass</button>
     </div>
   </div>
+</div>
 
   <!-- ===== BOTTOM ROW: THREE CARDS ===== -->
   <div style="display:flex; gap:30px; flex-wrap:wrap;">
@@ -121,6 +123,7 @@
   <script src="script.js"></script>
 </body>
 </html>
+
 
 
 
