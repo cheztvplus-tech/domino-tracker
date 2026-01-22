@@ -60,17 +60,19 @@ select {
 /* ===== TOP CONTROLS ===== */
 #theme-selection {
   display: flex;
-  flex-direction: column; /* forces each label + dropdown on its own line */
+  flex-direction: column; /* each label+dropdown on its own line */
   gap: 12px; /* spacing between rows */
 }
 
 #theme-selection label {
   display: inline-block;
-  min-width: 140px; /* optional, keeps labels aligned */
+  min-width: 140px;
+  margin-bottom: 4px;
 }
 
 #theme-selection select {
   display: inline-block;
+  max-width: 200px; /* <-- limits dropdown width */
 }
 
 /* ===== CLEAR HAND ===== */
@@ -146,7 +148,7 @@ select {
 #passes-log li {
   display: flex;
   align-items: center;
-  gap: 50px; /* space between text and rotated domino */
+  gap: 50px;
   margin-bottom: 6px;
   white-space: nowrap;
 }
